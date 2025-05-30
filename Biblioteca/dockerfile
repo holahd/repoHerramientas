@@ -6,7 +6,7 @@ COPY package*.json .
 # Install dependencies
 RUN npm i
 
-COPY index.js .
+COPY app.js .
 
 EXPOSE 3000
 
