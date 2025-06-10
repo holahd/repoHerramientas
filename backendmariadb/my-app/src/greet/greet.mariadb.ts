@@ -68,5 +68,5 @@ export class Greet {
         const conn = await getConnection()
         const result = await conn.query('UPDATE regards SET greet = ?, Language = ? WHERE id = ?', [param.greet, param.Language, id]);
         return result.affectedRows > 0;
-
+    }
 }

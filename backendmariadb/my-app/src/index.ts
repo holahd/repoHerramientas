@@ -2,6 +2,7 @@ import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 
 import ping from './ping/ping.js';
+import greet from './greet/greet.js';
 
 const app = new Hono()
 
@@ -10,6 +11,7 @@ app.get('/', (c) => {
 })
 
 app.route('/', ping)
+app.route('/', greet)
 
 serve({
   fetch: app.fetch,
