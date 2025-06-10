@@ -22,7 +22,7 @@ async function getConnection() {
     }
     return connection;
 }
-export class saludo {
+export class Greet {
     static async findAll() {
         const conn = await getConnection();
         return await conn.query('SELECT * FROM saludos');
