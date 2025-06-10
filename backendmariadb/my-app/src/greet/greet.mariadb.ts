@@ -30,27 +30,27 @@ async function getConnection(): Promise<Connection> {
 }
 
 export type param = {
-    greet: String   
-    Language: String
+    saludo: String   
+    idioma: String
 }
 
-export class Greet {
+export class saludo {
     static async findAll(){
         const conn = await getConnection()
-        return await conn.query('SELECT * FROM regards')
+        return await conn.query('SELECT * FROM saludos')
     }
 
     static async findByID (id: number) {
         const conn = await getConnection()
-        const result = await conn.query('SELECT * FROM regards WHERE id = ?', [id]);
+        const result = await conn.query('SELECT * FROM saludos WHERE id = ?', [id]);
         return result[0]
     }
 
     static async create(param: param) {
     
         const conn = await getConnection()
-        const res = await conn.query('INSERT INTO regards (greet, Language) VALUES (?, ?)', [param.greet, param.Language]);
-        const result = await conn.query('SELECT * FROM regards WHERE id = ?', [res.insertId]);
+        const res = await conn.query('INSERT INTO saludos (saludo, idioma) VALUES (?, ?)', [param.saludo, param.idioma]);
+        const result = await conn.query('SELECT * FROM saludos WHERE id = ?', [res.insertId]);
         return result[0];
     }
 
@@ -58,7 +58,7 @@ export class Greet {
 
 
         const conn = await getConnection()
-        const result = await conn.query('DELETE FROM regards WHERE id = ?', [id]);
+        const result = await conn.query('DELETE FROM saludos WHERE id = ?', [id]);
         return result.affectedRows > 0;
 
 
@@ -66,7 +66,7 @@ export class Greet {
 
     static async update (id: number, param: param) {
         const conn = await getConnection()
-        const result = await conn.query('UPDATE regards SET greet = ?, Language = ? WHERE id = ?', [param.greet, param.Language, id]);
+        const result = await conn.query('UPDATE saludos SET saludo = ?, idioma = ? WHERE id = ?', [param.saludo, param.idioma, id]);
         return result.affectedRows > 0;
     }
 }
