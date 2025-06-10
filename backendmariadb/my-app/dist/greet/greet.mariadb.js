@@ -34,7 +34,7 @@ export class Greet {
     }
     static async create(param) {
         const conn = await getConnection();
-        const res = await conn.query('INSERT INTO saludos (saludo, idioma) VALUES (?, ?)', [param.saludo, param.idioma]);
+        const res = await conn.query('INSERT INTO saludos (saludo, idioma) VALUES (?, ?)', [param.greet, param.language]);
         const result = await conn.query('SELECT * FROM saludos WHERE id = ?', [res.insertId]);
         return result[0];
     }
@@ -45,7 +45,7 @@ export class Greet {
     }
     static async update(id, param) {
         const conn = await getConnection();
-        const result = await conn.query('UPDATE saludos SET saludo = ?, idioma = ? WHERE id = ?', [param.saludo, param.idioma, id]);
+        const result = await conn.query('UPDATE saludos SET saludo = ?, idioma = ? WHERE id = ?', [param.greet, param.language, id]);
         return result.affectedRows > 0;
     }
 }
