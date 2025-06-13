@@ -1,6 +1,9 @@
 import { createConnection } from "mariadb";
 import * as dotenv from "dotenv";
-dotenv.config();
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: resolve(__dirname, '../.env') });
 const dbConfig = {
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
@@ -8,7 +11,8 @@ const dbConfig = {
     port: Number(process.env.DB_PORT),
     database: process.env.DB_NAME
 };
-let connection = null;
+console.log("CONFIGURACIÓN DE BASE DE DATOS:", dbConfig);
+let connection;
 async function getConnection() {
     if (!connection) {
         try {
@@ -22,6 +26,7 @@ async function getConnection() {
     }
     return connection;
 }
+getConnection();
 export class Greet {
     static async findAll() {
         const conn = await getConnection();
@@ -34,6 +39,10 @@ export class Greet {
     }
     static async create(param) {
         const conn = await getConnection();
+        // Validación por si acaso
+        if (!param.greet || !param.language) {
+            throw new Error("Faltan datos");
+        }
         const res = await conn.query('INSERT INTO saludos (saludo, idioma) VALUES (?, ?)', [param.greet, param.language]);
         const result = await conn.query('SELECT * FROM saludos WHERE id = ?', [res.insertId]);
         return result[0];
